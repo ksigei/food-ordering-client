@@ -5,8 +5,9 @@ import OrderList from './components/OrderList';
 import OrderDetail from './components/OrderDetail';
 import RestaurantList from './components/RestaurantList';
 import RestaurantDetail from './components/RestaurantDetail';
-import './App.css';
 
+
+import './App.css';
 
 function App() {
   return (
@@ -18,8 +19,8 @@ function App() {
         <Route path="/orders/:id" element={<OrderDetail />} />
         <Route path="/restaurants" element={<RestaurantList />} />
         <Route path="/restaurants/:id" element={<RestaurantDetail />} />
-
       </Routes>
+
     </Router>
   );
 }

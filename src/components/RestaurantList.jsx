@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import '../css/RestaurantList.css';
 
 function RestaurantList() {
   const [restaurants, setRestaurants] = useState([]);
@@ -16,12 +17,15 @@ function RestaurantList() {
   }, []);
 
   return (
-    <div>
+    <div className="restaurant-list-container">
       <h1>Restaurant List</h1>
-      <ul>
+      <ul className="restaurant-list">
         {restaurants.map(restaurant => (
-          <li key={restaurant.id}>
+          <li key={restaurant.id} className="restaurant-preview">
             <Link to={`/restaurants/${restaurant.id}`}>{restaurant.name}</Link>
+            <p>{restaurant.description}</p>
+            <p>{restaurant.address}</p>
+            <p>{restaurant.phone_number}</p>
           </li>
         ))}
       </ul>
