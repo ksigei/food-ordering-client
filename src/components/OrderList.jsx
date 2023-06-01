@@ -21,7 +21,9 @@ function OrderList() {
       <ul>
         {orders.map(order => (
           <li key={order.id}>
-            <Link to={`/orders/${order.id}`}>{order.orderNumber}</Link>
+            <Link to={`/orders/${order.id}`}>{order.id}</Link>
+            {/* <Link to={`/orders/${order.id}/edit`}>Edit</Link> */}
+            {/* <link to={`/orders/${order.id}/delete`}>Delete</link> */}
           </li>
         ))}
       </ul>
