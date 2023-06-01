@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { MenuProvider } from './contexts/MenuContext';
+import { OrderProvider } from './contexts/OrderContext'
+import MenuList from './components/MenuList';
+import OrderList from './components/OrderList';
+import MenuDetailPage from './pages/MenuDetailPage';
+import OrderDetailPage from './pages/OrderDetailPage';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <MenuProvider>
+        <OrderProvider>
+          <div>
+            <h1>Food Ordering App</h1>
+            <Switch>
+              <Route exact path="/" component={MenuList} />
+              <Route exact path="/menu/:menuId" component={MenuDetailPage} />
+              <Route exact path="/order/:orderId" component={OrderDetailPage} />
+            </Switch>
+            <OrderList />
+          </div>
+        </OrderProvider>
+      </MenuProvider>
+    </Router>
   );
-}
+};
 
 export default App;
