@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 
 const OrderForm = () => {
-  const [menuId, setMenuId] = useState('');
-  const [quantity, setQuantity] = useState('');
+  const [user_id, setUser_id] = useState('');
+  const [restaurant_id, setRestaurant_id] = useState('');
+  const [date, setDate] = useState('');
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -13,7 +14,7 @@ const OrderForm = () => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ menu_id: menuId, quantity }),
+      body: JSON.stringify({ user_id, restaurant_id, date }),
     })
       .then(response => response.json())
       .then(data => {
@@ -23,8 +24,9 @@ const OrderForm = () => {
       .catch(error => console.log(error));
 
     // Reset the form
-    setMenuId('');
-    setQuantity('');
+    setUser_id('');
+    setRestaurant_id('');
+    setDate('');
   };
 
   return (
@@ -32,24 +34,39 @@ const OrderForm = () => {
       <h2>Create Order</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="menuId">Menu:</label>
-          <input
-            type="text"
-            id="menuId"
-            value={menuId}
-            onChange={e => setMenuId(e.target.value)}
-          />
+          <label htmlFor="user_id">
+            User ID
+            <input
+              type="text"
+              id="user_id"
+              value={user_id}
+              onChange={e => setUser_id(e.target.value)}
+            />
+          </label>
         </div>
         <div>
-          <label htmlFor="quantity">Quantity:</label>
-          <input
-            type="number"
-            id="quantity"
-            value={quantity}
-            onChange={e => setQuantity(e.target.value)}
-          />
+          <label htmlFor="restaurant_id">
+            Restaurant ID
+            <input
+              type="text"
+              id="restaurant_id"
+              value={restaurant_id}
+              onChange={e => setRestaurant_id(e.target.value)}
+            />
+          </label>
         </div>
-        <button type="submit">Submit</button>
+        <div>
+          <label htmlFor="date">
+            Date
+            <input
+              type="text"
+              id="date"
+              value={date}
+              onChange={e => setDate(e.target.value)}
+            />
+          </label>
+        </div>
+        <button type="submit">Create Order</button>
       </form>
     </div>
   );
