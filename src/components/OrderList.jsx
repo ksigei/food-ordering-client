@@ -1,29 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
-const OrderList = () => {
+function OrderList() {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    // Fetch orders from the API
-    fetch('http://localhost:8000/api/orders')
-      .then(response => response.json())
-      .then(data => setOrders(data))
-      .catch(error => console.log(error));
+    axios.get('http://localhost:8000/api/orders')
+      .then(response => {
+        setOrders(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }, []);
 
   return (
     <div>
-      <h2>Order List</h2>
-      {orders.map(order => (
-        <div key={order.id}>
-          <h3>Order ID: {order.id}</h3>
-          {/* <p>Menu: {order.menu.name}</p> */}
-          <p>Restaurant: {order.restaurant}</p>
-          {/* <p>Price: ${order.price}</p> */}
-        </div>
-      ))}
+      <h1>Order List</h1>
+      <ul>
+        {orders.map(order => (
+          <li key={order.id}>
+            <Link to={`/orders/${order.id}`}>{order.orderNumber}</Link>
+          </li>
+        ))}
+      </ul>
     </div>
   );
-};
+}
 
 export default OrderList;

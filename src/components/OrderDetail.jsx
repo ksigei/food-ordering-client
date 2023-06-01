@@ -1,16 +1,20 @@
-import React, { useContext, useEffect } from 'react';
-import { OrderContext } from './OrderContext';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
-const OrderDetail = ({ orderId }) => {
-  const { order, setOrder } = useContext(OrderContext);
+function OrderDetail() {
+  const [order, setOrder] = useState(null);
+  const { id } = useParams();
 
   useEffect(() => {
-    // Fetch order details from the API based on orderId
-    fetch(`http://localhost:8000/api/orders/${orderId}`)
-      .then(response => response.json())
-      .then(data => setOrder(data))
-      .catch(error => console.log(error));
-  }, [orderId, setOrder]);
+    axios.get(`http://localhost:8000/api/orders/${id}`)
+      .then(response => {
+        setOrder(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, [id]);
 
   if (!order) {
     return <div>Loading...</div>;
@@ -18,13 +22,12 @@ const OrderDetail = ({ orderId }) => {
 
   return (
     <div>
-      <h2>Order Detail</h2>
-      <h3>Order ID: {order.id}</h3>
-      <p>Menu: {order.menu.name}</p>
-      <p>Quantity: {order.quantity}</p>
-      <p>Price: ${order.price}</p>
+      <h1>Order Details</h1>
+      <p>Order Number: {order.orderNumber}</p>
+      <p>Status: {order.status}</p>
+      {/* Additional order details */}
     </div>
   );
-};
+}
 
 export default OrderDetail;

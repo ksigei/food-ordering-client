@@ -1,30 +1,27 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { MenuProvider } from './contexts/MenuContext';
-import { OrderProvider } from './contexts/OrderContext'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import MenuList from './components/MenuList';
+import MenuDetail from './components/MenuDetail';
 import OrderList from './components/OrderList';
-import MenuDetailPage from './pages/MenuDetailPage';
-import OrderDetailPage from './pages/OrderDetailPage';
+import OrderDetail from './components/OrderDetail';
+import RestaurantList from './components/RestaurantList';
+import RestaurantDetail from './components/RestaurantDetail';
+import './App.css';
 
-const App = () => {
+
+function App() {
   return (
     <Router>
-      <MenuProvider>
-        <OrderProvider>
-          <div>
-            <h1>Food Ordering App</h1>
-            <Switch>
-              <Route exact path="/" component={MenuList} />
-              <Route exact path="/menu/:menuId" component={MenuDetailPage} />
-              <Route exact path="/order/:orderId" component={OrderDetailPage} />
-            </Switch>
-            <OrderList />
-          </div>
-        </OrderProvider>
-      </MenuProvider>
+      <Routes>
+        <Route path="/" element={<MenuList />} />
+        <Route path="/menu/:id" element={<MenuDetail />} />
+        <Route path="/orders" element={<OrderList />} />
+        <Route path="/orders/:id" element={<OrderDetail />} />
+        <Route path="/restaurants" element={<RestaurantList />} />
+        <Route path="/restaurants/:id" element={<RestaurantDetail />} />
+
+      </Routes>
     </Router>
   );
-};
+}
 
 export default App;

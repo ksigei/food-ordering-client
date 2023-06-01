@@ -1,16 +1,20 @@
-import React, { useContext, useEffect } from 'react';
-import { MenuContext } from './MenuContext';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
-const MenuDetail = ({ menuId }) => {
-  const { menu, setMenu } = useContext(MenuContext);
+function MenuDetail() {
+  const [menu, setMenu] = useState(null);
+  const { id } = useParams();
 
   useEffect(() => {
-    // Fetch menu details from the API based on menuId
-    fetch(`http://localhost:8000/api/menus/${menuId}`)
-      .then(response => response.json())
-      .then(data => setMenu(data))
-      .catch(error => console.log(error));
-  }, [menuId, setMenu]);
+    axios.get(`http://localhost:8000/api/menus/${id}`)
+      .then(response => {
+        setMenu(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, [id]);
 
   if (!menu) {
     return <div>Loading...</div>;
@@ -18,12 +22,11 @@ const MenuDetail = ({ menuId }) => {
 
   return (
     <div>
-      <h2>Menu Detail</h2>
-      <h3>{menu.name}</h3>
-      <p>Price: ${menu.price}</p>
+      <h1>{menu.name}</h1>
       <p>Description: {menu.description}</p>
+      <p>Price: {menu.price}</p>
     </div>
   );
-};
+}
 
 export default MenuDetail;
